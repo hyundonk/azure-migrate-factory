@@ -34,7 +34,10 @@ Foreach ($VM in $VMs){
     Write-Host "[$vmname] Create Azure Image[$imageName]"
     $myImage = New-AzImage -Image $image -ImageName $imageName -ResourceGroupName $VM.RESOURCE_GROUP_IMAGE
 
-    Write-Host "[$vmname] Image[$imageName] creation completed."
+    Write-Host "[$vmname] Image[$imageName] creation completed. Removing origin VM(NoWait)..."
+
+    Remove-AzVM -ResourceGroupName $VM.RESOURCE_GROUP_VM -Name $vmname -Force -NoWait
+
     $counter++
 }
 
