@@ -25,7 +25,7 @@ Foreach ($VM in $VMs){
     $vmObj = Get-AzVM -Name $vmname -ResourceGroupName $VM.RESOURCE_GROUP_VM
 
     # Create the VM image configuration based on the source VM
-    $image = New-AzImageConfig -Location $rg.Location -SourceVirtualMachineId $vmObj.ID 
+    $image = New-AzImageConfig -Location $rg.Location -SourceVirtualMachineId $vmObj.ID -HyperVGeneration $vmObj.HyperVGeneration
 
     # Remove last 6 characters(p-test)
     $length = $vmname.length
