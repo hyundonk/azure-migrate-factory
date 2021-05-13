@@ -25,7 +25,7 @@ Foreach ($VM in $VMs){
     $vmObj = Get-AzVM -Name $vmname -ResourceGroupName $VM.RESOURCE_GROUP_VM
 
     # Create the VM image configuration based on the source VM
-    $image = New-AzImageConfig -Location $rg.Location -SourceVirtualMachineId $vmObj.ID -HyperVGeneration $vmObj.HyperVGeneration
+    $image = New-AzImageConfig -Location $rg.Location -SourceVirtualMachineId $vmObj.ID 
 
     # Remove last 6 characters(p-test)
     $length = $vmname.length
@@ -34,10 +34,7 @@ Foreach ($VM in $VMs){
     Write-Host "[$vmname] Create Azure Image[$imageName]"
     $myImage = New-AzImage -Image $image -ImageName $imageName -ResourceGroupName $VM.RESOURCE_GROUP_IMAGE
 
-    Write-Host "[$vmname] Image[$imageName] creation completed." 
-
-    #Remove-AzVM -ResourceGroupName $VM.RESOURCE_GROUP_VM -Name $vmname -Force -NoWait
-
+    Write-Host "[$vmname] Image[$imageName] creation completed."
     $counter++
 }
 
