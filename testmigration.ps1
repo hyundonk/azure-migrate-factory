@@ -52,7 +52,10 @@ Function ProcessItemImpl($processor, $csvItem, $reportItem) {
 
     if ($ReplicatingServer.MigrationState -eq 'Replicating') {
       $logger.LogTrace("Replicating Server: $($ReplicatingServer.MachineName) in $($ReplicatingServer.MigrationState), $($ReplicatingServer.MigrationStateDescription) start Test Migration Job")
-
+      
+      $LastRecoveryPointReceived = $($ReplicatingServer.ProviderSpecificDetail).LastRecoveryPointReceived
+      $logger.LogTrace("LastRecoveryPointReceived: $LastRecoveryPointReceived")
+  
       $TestMigrationJob = Start-AzMigrateTestMigration -InputObject $ReplicatingServer -TestNetworkID $TestVirtualNetwork.Id
       sleep 1
       $TestMigrationJob = Get-AzMigrateJob -InputObject $TestMigrationJob
